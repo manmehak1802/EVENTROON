@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Tournament Details</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    .form-container {
+      border: 2px solid black;
+      padding: 20px;
+      margin: 30px auto;
+      max-width: 1000px;
+      border-radius: 10px;
+      background-color: #f8f9fa;
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 25px;
+      margin: 10px;
+    }
+
+    .form-row {
+      margin-bottom: 15px;
+    }
+  </style>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  
+<!--------------------------------------ajax for publish ----------------->
+    <script>
+         $(document).ready(function () {
+      $("#publish").click(function () {
+        let emailid3 = $("#Emailid").val();
+        let eventname= $("#event").val();
+        let doe=$("#eventdate").val();
+        let toe= $("#eventtime").val();
+        let address= $("#eventaddress").val();
+        let city= $("#eventcity").val();
+       let sport=$("#eventsport").val();
+        let minage= $("#Minage").val();
+        let maxage= $("#Maxage").val();
+        let lastdate= $("#eventlastdate").val();
+        let fee= $("#eventfee").val();
+        let prize= $("#prizemoney").val();
+        let contact= $("#person").val();
+        //alert(pwd);
+        let obj = {
+          type: "get",
+          url: "/PUBLISH",//get one is which we will create in server file 
+          data: {
+            Emailid: emailid3,
+            event:eventname,
+            eventdate:doe,
+            eventtime:toe,
+            eventaddress:address,
+            eventcity:city,
+            eventsport:sport,
+            Minage:minage,
+            Maxage:maxage,
+            eventlastdate:lastdate,
+            eventfee:fee,
+            prizemoney:prize,
+            person:contact,
+           
+          }
+        }
+        $.ajax(obj).then(
+          function (responseJsonAry) {
+            alert(JSON.stringify(responseJsonAry))
+          }).fail(function (err) {
+            alert(err.message);
+          })
+      })
+    })
+    </script>
+  <script>
+       function showUser()
+       {
+            let activeUser=localStorage.getItem("activeUser");
+            document.getElementById("Emailid").value=activeUser;
+       }
+</script>
+
+</head>
+
+<body  style="background-color: #DDD0C8;" onload="showUser();">
+   
+
+    <h2 style="color:  #323232; font-weight: bold;">Tournament Details</h2>
+    <div class="form-container" style="background-color:#DDD0C8;">
+    <form style="background-color:#DDD0C8;">
+
+      <div class="row form-row">
+        <div class="col-md-3">
+          <label for="emailid" class="form-label">Email ID</label>
+          <input type="text" style="width: 700px;" class="form-control" id="Emailid" readonly>
+        </div>
+      </div>
+      <div class="row form-row">
+        <div class="col-md-3">
+          <label for="eventname" class="form-label">Event Name</label>
+          <input type="text" class="form-control" id="event" required>
+        </div>
+        <div class="col-md-3">
+          <label for="eventdate" class="form-label">Date</label>
+          <input type="date" class="form-control" id="eventdate" required>
+        </div>
+        <div class="col-md-3">
+          <label for="eventtime" class="form-label">Time</label>
+          <input type="time" class="form-control" id="eventtime" required>
+        </div>
+      </div>
+
+      <div class="row form-row">
+        <div class="col-md-6">
+          <label for="address" class="form-label">Location/Address</label>
+          <input type="text" class="form-control" id="eventaddress" required>
+        </div>
+        <div class="col-md-6">
+          <label for="city" class="form-label">City</label>
+          <input type="text" class="form-control" id="eventcity" required>
+        </div>
+      </div>
+
+      <div class="row form-row">
+        <div class="col-md-4">
+          <label for="sport" class="form-label">Sports Category</label>
+          <select class="form-select" id="eventsport" required>
+            <option selected disabled>Choose sport</option>
+            <option>Cricket</option>
+            <option>Football</option>
+            <option>Hockey</option>
+            <option>Badminton</option>
+            <option>Tennis</option>
+            <option>Wrestling</option>
+            <option>Kabaddi</option>
+            <option>Table Tennis</option>
+            <option>Boxing</option>
+            <option>Chess</option>
+          </select>
+        </div>
+        <div class="col-md-4">
+          <label  class="form-label">Min Age</label>
+          <input type="number" class="form-control" id="Minage" required>
+        </div>
+        <div class="col-md-4">
+          <label  class="form-label">Max Age</label>
+          <input type="number" class="form-control" id="Maxage"  required>
+        </div>
+      </div>
+
+      <div class="row form-row">
+        <div class="col-md-4">
+          <label for="lastdate" class="form-label">Last Date of Registration</label>
+          <input type="date" class="form-control" id="eventlastdate" required>
+        </div>
+        <div class="col-md-4">
+          <label for="fee" class="form-label">Fee</label>
+          <input type="number" class="form-control" id="eventfee"  required>
+        </div>
+        <div class="col-md-4">
+          <label for="prizemoney" class="form-label">Prize Money</label>
+          <input type="number" class="form-control" id="prizemoney" required>
+        </div>
+      </div>
+
+      <div class="row form-row">
+        <div class="col-md-6">
+          <label for="contactperson" class="form-label" >Contact Person</label>
+          <input type="text" class="form-control" id="person"  style="width: 700px;">
+        </div>
+      </div>
+      <div class="row form-row">
+        <div class="col-md-6 d-flex align-items-end">
+          <button type="button" id="publish" style="background-color: #323232; color:  #c7ab9b; border: 0px;" class="btn btn-primary w-100">Publish Event</button>
+        </div>
+      </div>
+
+    </form>
+
+  </div>
+  <br><br><br>
+
+<nav class="navbar  bg-body-primary" style="background-color:#323232a9">
+    <div class="container-fluid">
+      <a class="navbar-brand" style="color:#c7ab9b " href="#">www.sportsevents.com</a>
+    </div>
+</nav>
+
+
+</body>
+
+</html>

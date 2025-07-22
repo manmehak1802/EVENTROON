@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Manage Tournaments</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.8.3/angular.min.js"></script>
+
+  <script>
+    var mymodule = angular.module("kuchModule", []);
+
+    mymodule.controller("kuchController", function ($scope, $http) {
+      $scope.jsonArray = [];
+      $scope.emailInput = "";
+
+      $scope.doFetchAll = function () {
+        var url = "/do-fetch-all-users?emailid3=" +localStorage.getItem("activeUser")
+        $http.get(url).then(allGoodFx, someBadFx);
+
+        function allGoodFx(response) {
+          $scope.jsonArray = response.data;
+        }
+
+        function someBadFx(response) {
+          alert(JSON.stringify(response.data));
+        }
+      };
+
+      $scope.doDelete = function (rid) {
+        var url = "/delete-one?ridKuch=" + rid;
+        $http.get(url).then(allGoodFx, someBadFx);
+
+        function allGoodFx(response) {
+          alert(response.data);
+          $scope.doFetchAll();
+        }
+
+        function someBadFx(response) {
+          alert(JSON.stringify(response.data));
+        }
+      };
+    });
+  </script>
+
+  <style>
+    body {
+      background-color: #f8f9fa;
+    }
+
+    .main-box {
+      margin-top: 30px;
+      background:#ede6e3;
+      padding: 40px;
+      border-radius: 15px;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+      margin-top: 30px;
+    }
+  </style>
+
+    <script>
+       function showUser()
+       {
+            let activeUser=localStorage.getItem("activeUser");
+            document.getElementById("email").value=activeUser;
+       }
+</script>
+
+</head>
+<body  style="background-color: #DDD0C8;;" ng-app="kuchModule" ng-controller="kuchController" ng-init="doFetchAll();">
+  <center>
+    <h1 class="mb-4 fw-bold" style="color:  #323232;font-weight: bold;">Manage Your Tournaments</h1>
+  </center>
+
+  <div class="container d-flex justify-content-center">
+    <div class="col-md-8 main-box text-center">
+<!---
+      <div class="row justify-content-center g-2">
+        <div class="col-sm-8">
+          <input type="email" class="form-control" id="emailInput" placeholder="Enter email" ng-model="emailInput">
+        </div>
+        <div class="col-sm-auto">
+          <input type="button" style="background-color: rgb(30, 112, 235); color: #f8f9fa; border:0px ;line-height: 35px; border-radius:5px ;" value="Fetch All Records" ng-click="doFetchAll();">
+        </div>
+      </div>
+--->
+      <table width="800" border="1" rules="all" class="mt-4" align="center" >
+        <tr>
+          <th>Sr.No</th>
+          <th>RID</th>
+          <th>Email ID</th>
+          <th>Event Name</th>
+          <th>Date of registration</th>
+          <th>Sports</th>
+          <th>Operations</th>
+        </tr>
+        <tr ng-repeat="obj in jsonArray">
+          <td>{{$index + 1}}</td>
+          <td>{{obj.rid}}</td>
+          <td>{{obj.emailid3}}</td>
+          <td>{{obj.eventname}}</td>
+          <td>{{obj.doe}}</td>
+          <td>{{obj.sports}}</td>
+          <td>
+            <input type="button" style="background-color: #323232; color: #c7ab9b;border: 0px; border-radius: 5px;" ng-click="doDelete(obj.rid);" value="Remove">
+          </td>
+        </tr>
+      </table>
+
+    </div>
+  </div>
+</body>
+</html>
+

@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.8.3/angular.min.js"></script>
+
+    <title>Admin console</title>
+    <script>
+
+        var mymodule = angular.module("kuchModule", []);
+
+        mymodule.controller("kuchController", function ($scope, $http) {
+
+            $scope.jsonArray = [];
+
+            $scope.doFetchAll = function () {
+                var url = "/fetch-players";
+
+
+                $http.get(url).then(allGoodFx, someBadFx);
+                function allGoodFx(response) {
+                    //resp in JSON array
+                    //alert(JSON.stringify(response.data));
+                    $scope.jsonArray = response.data;
+                }
+
+                function someBadFx(response) {
+                    alert(JSON.stringify(response.data));
+                }
+            }
+        })
+
+
+    </script>
+</head>
+
+<body ng-app="kuchModule" ng-controller="kuchController" ng-init="doFetchAll();">
+
+    <center>
+        <h1>Users Admin Console</h1>
+
+
+        <!--<input type="button" value="Fetch All Records" ng-click="doFetchAll();">-->
+        <h2>All Records</h2>
+        <table width="800" border="1" rules="all">
+            <tr>
+                <th>Sr.No</th>
+                <th>Email Id</th>
+                <th>Addhar Pic</th>
+                <th>Profile Pic</th>
+                <th>Name</th>
+                <th>Date of Birth</th>
+                <th>Gender</th>
+                <th>Address</th>
+                <th>Contact</th>
+                <th>Information</th>
+                <th>Game</th>
+
+                </td>
+            </tr>
+            <tr ng-repeat="obj in jsonArray">
+                <td>{{$index+1}}</td>
+                <td>{{obj.Emailid}}</td>
+
+                 <td>
+                    <a href={{obj.addharpic}}>
+                        <img src={{obj.addharpic}} width="50" height="50">
+                    </a>
+                </td>
+                 <td>
+                    <a href={{obj.profilepic}}>
+                        <img src={{obj.profilepic}} width="50" height="50">
+                    </a>
+                </td>
+
+
+
+                <td>{{obj.pname}}</td>
+                <td>{{obj.dob}}</td>
+                <td>{{obj.gender}}</td>
+                <td>{{obj.address}}</td>
+                <td>{{obj.contact}}</td>
+                <td>{{obj.game}}</td>
+                <td>{{obj.info}}</td>
+               
+
+               
+        </table>
+
+        </table>
+
+
+    </center>
+</body>
+
+</html>

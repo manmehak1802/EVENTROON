@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.8.3/angular.min.js"></script>
+
+    <title>Admin console</title>
+    <script>
+
+        var mymodule = angular.module("kuchModule", []);
+
+        mymodule.controller("kuchController", function ($scope, $http) {
+
+            $scope.jsonArray = [];
+
+            $scope.doFetchAll = function () {
+                var url = "/fetch-organizers";
+
+
+                $http.get(url).then(allGoodFx, someBadFx);
+                function allGoodFx(response) {
+                    //resp in JSON array
+                    //alert(JSON.stringify(response.data));
+                    $scope.jsonArray = response.data;
+                }
+
+                function someBadFx(response) {
+                    alert(JSON.stringify(response.data));
+                }
+            }
+        })
+
+
+    </script>
+</head>
+
+<body ng-app="kuchModule" ng-controller="kuchController" ng-init="doFetchAll();">
+
+    <center>
+        <h1>Users Admin Console</h1>
+
+
+        <!--<input type="button" value="Fetch All Records" ng-click="doFetchAll();">-->
+        <h2>All Records</h2>
+        <table width="800" border="1" rules="all">
+            <tr>
+                <th>Sr.No</th>
+                <th>Email Id</th>
+                <th>Organisation Name</th>
+                <th>Reg. Number</th>
+                <th>Address</th>
+                <th>City</th>
+                <th>Sports</th>
+                <th>Website</th>
+                <th>Instagram</th>
+                <th>Head</th>
+                <th>Contact</th>
+                <th>Information</th>
+                <th>pic</th>
+
+                </td>
+            </tr>
+            <tr ng-repeat="obj in jsonArray">
+                <td>{{$index+1}}</td>
+                <td>{{obj.emailid2}}</td>
+                <td>{{obj.orgname}}</td>
+                <td>{{obj.regnumber}}</td>
+                <td>{{obj.address}}</td>
+                <td>{{obj.city}}</td>
+                <td>{{obj.sports}}</td>
+                <td>{{obj.websitee}}</td>
+                <td>{{obj.instagram}}</td>
+                <td>{{obj.head}}</td>
+                <td>{{obj.contact}}</td>
+                <td>{{obj.info}}</td>
+
+
+                <td>
+                    <a href={{obj.picurl}}>
+                        <img src={{obj.picurl}} width="50" height="50">
+                    </a>
+                </td>
+        </table>
+
+        </table>
+
+
+    </center>
+</body>
+
+</html>

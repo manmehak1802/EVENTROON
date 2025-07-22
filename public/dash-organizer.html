@@ -1,0 +1,145 @@
+ 
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Organizer Dashboard</title>
+
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    .card-img-top {
+      height: 200px;
+      object-fit: cover;
+    }
+  </style>
+  <style>
+  .custom-shadow {
+    box-shadow: 0 0 10px rgba(95, 94, 94, 0.3); /* soft grey all around */
+    transition: box-shadow 0.3s ease-in-out;
+  }
+
+  .custom-shadow:hover {
+    box-shadow: 0 0 20px rgba(64, 64, 64, 0.6); /* dark grey all around on hover */
+  }
+</style>
+<style>
+  .custom-shadow {
+    box-shadow: 0 4px 8px rgba(50, 50, 50, 0.4);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .custom-shadow:hover {
+     transform: translateY(-8px);
+      box-shadow: 0 8px 16px rgba(50, 50, 50, 0.8);
+  }
+</style>
+
+
+<script>
+       function showUser()
+       {
+            let activeUser=localStorage.getItem("activeUser");
+            document.getElementById("welcome").innerHTML=activeUser;
+       }
+        function dologout()
+       {
+        localStorage.removeItem("activeUser");
+        location.href="index.html";
+       }
+</script>
+</head>
+
+<body  style="background-color: #DDD0C8;" onload="showUser();">
+ <!---- <nav class="navbar bg-body-primary" style="background-color:#323232; color: #c7ab9b;">
+    <div class="container-fluid">
+      <div style="color: white;"> Welcome: <span id="welcome">*</span></div>
+    </div>
+  </nav>-->
+  <nav class="navbar bg-body-primary" style="background-color:#323232;">
+  <div class="container-fluid d-flex justify-content-between">
+    <!-- Left: Organizer Dashboard -->
+    <span class="navbar-brand" style="color: #c7ab9b; font-size:xx-large; font-weight: bold;">
+      Organizer Dashboard
+    </span>
+
+    <!-- Right: Welcome User -->
+    <span class="navbar-text" style="color: #c7ab9b;">
+      Welcome: <span id="welcome">*</span>
+    </span>
+  </div>
+</nav>
+
+  <div class="container ">
+    <h1 class="text-center mb-4" style="color: #323232; font-weight: bold; margin-top: 50px;"></h1>
+    <div class="row g-4">
+
+      
+      <div class="col-md-6 col-lg-3">
+        <div class="card h-100 custom-shadow">
+          <img src="pics//org.jpg" class="card-img-top" alt="Organizer 1">
+          <div class="card-body">
+            <h5 class="card-title">Organizer</h5>
+            <p class="card-text">Register about your organization here 
+            </p>
+            <a href="org-details.html" class="btn btn-primary" style="background-color: #323232; color: #c7ab9b;border: 0px;">Organizer Details</a>
+          </div>
+        </div>
+      </div>
+
+      
+      <div class="col-md-6 col-lg-3">
+        <div class="card h-100 custom-shadow">
+          <img src="pics/Vector sport template.jpg" class="card-img-top" alt="Organizer 2">
+          <div class="card-body">
+            <h5 class="card-title"> Events </h5>
+            <p class="card-text">Post your events here 
+            </p>
+            <a href="post-tournaments.html" style="background-color: #323232; color: #c7ab9b;border: 0px;" class="btn btn-primary">Post Event</a>
+          </div>
+        </div>
+      </div>
+
+         <div class="col-md-6 col-lg-3">
+        <div class="card h-100 custom-shadow">
+          <img src="pics/manage.jpg" class="card-img-top" alt="Organizer 2">
+          <div class="card-body">
+            <h5 class="card-title"> Tournament Manager  </h5>
+            <p class="card-text">manage all your events here  
+            </p>
+            <a href="tournament-manager.html"  style="background-color: #323232; color: #c7ab9b;border: 0px;" class="btn btn-primary">Manage Events </a>
+          </div>
+        </div>
+      </div>   
+
+      <div class="col-md-6 col-lg-3">
+        <div class="card h-100 custom-shadow">
+          <img src="pics/Logout free icons designed by Pixel perfect.jpg" style=" height: 200px; width: 200px;  margin-left: 50px; margin-top: 30px;"class="card-img-top" alt=" log out">
+          <div class="card-body">
+            <br><br>
+            <h5 class="card-title"></h5>
+            <p class="card-text">  </p>
+            <p href="" class="btn btn-primary "  style="background-color: #323232; color: #c7ab9b;border: 0px;" onclick="dologout();">Log Out </a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+
+    </div>
+  </div>
+
+  <nav class="navbar fixed-bottom bg-body-primary" style="background-color:#32323282">
+    <div class="container-fluid">
+      <a class="navbar-brand" style="color:#3232324d; color: #c7ab9b;" href="#">www.sportsevent.com</a>
+    </div>
+  </nav>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

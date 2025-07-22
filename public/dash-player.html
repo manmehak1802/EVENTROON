@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Organizer Dashboard - Multiple Cards</title>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.8.3/angular.min.js"></script>
+
+  <style>
+    .card-img-top {
+      height: 200px;
+      object-fit: cover;
+    }
+  </style>
+<style>
+  .custom-shadow {
+    box-shadow: 0 4px 8px rgba(50, 50, 50, 0.4);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .custom-shadow:hover {
+     transform: translateY(-8px);
+      box-shadow: 0 8px 16px rgba(50, 50, 50, 0.8);
+  }
+</style>
+
+
+
+  <!----------------------------------------------------------------------------------->
+     <script>
+          
+        var mymodule = angular.module("kuchModule", []);
+
+        mymodule.controller("kuchController", function ($scope, $http) {
+            
+            $scope.Emailid="";
+            $scope.oldpassword="";
+            $scope.newpassword = ""; 
+
+            $scope.dochange = function () {
+                //alert();
+                var url = "/do-change-password?kuchemail="+$scope.Emailid+"&kuchpwd="+$scope.oldpassword+"&newpassword="+$scope.newpassword;
+
+
+                $http.get(url).then(allGoodFx, someBadFx);
+                function allGoodFx(response) {
+                   alert(response.data); 
+                    //resp in JSON array
+                    // alert(JSON.stringify(response.data));
+                    $scope.jsonArray = response.data;
+                }
+
+                function someBadFx(response) {
+                    alert(JSON.stringify(response.data));
+                }
+            }
+          })
+     </script>
+       <script>
+       function showUser()
+       {
+            let activeUser=localStorage.getItem("activeUser");
+            document.getElementById("welcome").innerHTML=activeUser;
+       }
+       function dologout()
+       {
+        localStorage.removeItem("activeUser");
+        location.href="index.html";
+       }
+</script>
+
+
+  <!---------------------------------------------------------------------------------------------->
+</head>
+
+<body style="background-color: #DDD0C8;"   ng-app="kuchModule" ng-controller="kuchController" onload="showUser();">
+ <!--- <nav class="navbar bg-body-primary" style="background-color:#323232;">
+    <div class="container-fluid">
+      <div class="navbar-brand" style="color: #c7ab9b"> Welcome : <span id="welcome"></span> 
+      
+       
+     </div>
+    </div>
+  </nav>-->
+  <nav class="navbar bg-body-primary" style="background-color:#323232;">
+  <div class="container-fluid d-flex justify-content-between">
+    <!-- Left: Player Dashboard -->
+    <span class="navbar-brand" style="color: #c7ab9b; font-size:xx-large; font-weight: bold;">
+      Player Dashboard
+    </span>
+
+    <!-- Right: Welcome User -->
+    <span class="navbar-text" style="color: #c7ab9b;">
+      Welcome: <span id="welcome"></span>
+    </span>
+  </div>
+</nav>
+
+
+  <div class="container">
+    <h1 class="text-center mb-4" style="margin-top: 70px; color: #323232;"></h1>
+    <div class="row g-4">
+
+      
+      <div class="col-md-6 col-lg-3">
+        <div class="card h-100 custom-shadow"> 
+             <img src="pics/Sports Figure Silhouette PNG Free, Sports Figures Silhouette Background, Sport Silhouette Figures, Black, Rio Olympics PNG Image For Free Download.jpg" style="height: 250px;width: 250px; margin-left: 25px;" class="card-img-top" alt="explore event ">
+          <div class="card-body">
+            <h5 class="card-title">Explaore Event </h5>
+            <p class="card-text"> Here you can find nearby events </p>
+            <a href="tournament-finder.html" class="btn btn-primary" style="background-color: #323232; color: #c7ab9b;border: 0px;">Explore  </a>
+          </div>
+        </div>
+      </div>
+
+     
+      <div class="col-md-6 col-lg-3">
+        <div class="card h-100 custom-shadow">
+          <img src="pics/iconos de persona de avatar negro_ icono de perfil de usuario.jpg" style="height: 250px;width: 250px; margin-left: 25px;"  class="card-img-top" alt="Profile">
+          <div class="card-body">
+            <h5 class="card-title">Profile</h5>
+            <p class="card-text"> Register here as a player </p>
+            <a href="profile-player.html" class="btn btn-primary"  style="background-color: #323232; color: #c7ab9b;border: 0px;">Add </a>
+          </div>
+        </div>
+      </div>
+
+   <!-------------------------------------------------------------------------------------------------------------->   
+    
+<div class="col-md-6 col-lg-3" >
+  <div class="card h-100 custom-shadow"  >
+    <img src="pics/download.jpg" style="height: 200px;width: 200px; margin-left: 50px; margin-top: 10px;" class="card-img-top" alt="settings">
+    <div class="card-body">
+      <br><br>
+      <h5 class="card-title"> Settings</h5>
+      <p class="card-text"> Update your Password </p>
+      <button type="button" class="btn btn-primary"  style="background-color: #323232; color: #c7ab9b;border: 0px;" data-bs-toggle="modal" data-bs-target="#settingsModal">
+        Update
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Code -->
+<div class="modal fade"  style="background-color: #ddd0c871;" id="settingsModal" tabindex="-1" aria-labelledby="settingsModalLabel" aria-hidden="true">
+  <div class="modal-dialog" >
+    <div class="modal-content"  style="background-color:#DDD0C8;" >
+      <div class="modal-header" style="background-color: #323232;">
+        <h5 class="modal-title" id="settingsModalLabel" style="color: #c7ab9b;">Change Password</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="mb-3">
+            <label for="emailid" class="form-label">Email ID</label>
+            <input type="email" name="Emailid" ng-model="Emailid" class="form-control" id="Emailid" placeholder="Enter your email">
+          </div>
+          <div class="mb-3">
+            <label for="oldpassword" class="form-label">Old Password</label>
+            <input type="password" name="oldpassword" ng-model="oldpassword"    class="form-control" id="oldpassword" placeholder="Enter old password">
+          </div>
+          <div class="mb-3">
+            <label for="newpassword" class="form-label">New Password</label>
+            <input type="password" class="form-control"  name="newpassword" ng-model="newpassword"  id="newpassword" placeholder="Enter new password">
+          </div>
+          <button type="button" id="update" class="btn btn-primary" style="background-color: #323232;color: #c7ab9b; border: 0px;" ng-click="dochange();">Update</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+      
+     <div class="col-md-6 col-lg-3">
+        <div class="card h-100 custom-shadow">
+          <img src="pics/Logout free icons designed by Pixel perfect.jpg" style=" height: 200px; width: 200px;  margin-left: 50px; margin-top: 50px;"class="card-img-top" alt=" log out">
+          <div class="card-body">
+            <br><br>
+            <h5 class="card-title"></h5>
+            <p class="card-text">  </p>
+            
+            <p href="" class="btn btn-primary"  style="background-color: #323232; color: #c7ab9b;border: 0px;" onclick="dologout();">Log Out </a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+
+
+  <nav class="navbar fixed-bottom bg-body-primary" style="background-color:#32323232">
+    <div class="container-fluid">
+      <a class="navbar-brand" style="color:#323232" href="#">www.sportsevent.com</a>
+    </div>
+  </nav>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

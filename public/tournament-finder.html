@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.8.3/angular.min.js"></script>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>tournament details</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous" />
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q"
+        crossorigin="anonymous"></script>
+
+    <title>Document</title>
+    <script>
+        var mymodule = angular.module("kuchModule", []);
+
+        mymodule.controller("kuchController", function ($scope, $http) {
+            $scope.jsonArray = [];
+            $scope.selCity;
+            $scope.selGame;
+
+            $scope.doFetchAll = function () {
+                //alert();
+                var url = "/do-fetch-all-tournaments?kuchCity="+$scope.selCity+"&kuchGame="+$scope.selGame;
+
+
+                $http.get(url).then(allGoodFx, someBadFx);
+                function allGoodFx(response) {
+                    //resp in JSON array
+                    // alert(JSON.stringify(response.data));
+                    $scope.jsonArray = response.data;
+                }
+
+                function someBadFx(response) {
+                    alert(JSON.stringify(response.data));
+                }
+            };
+            //-----------------------------------------------------
+              $scope.cities=[{}];
+  $scope.doFetchAlCities = function () {
+                var url = "/do-fetch-all-cities";
+
+                $http.get(url).then(allGoodFx, someBadFx);
+                function allGoodFx(response) {
+                    //resp in JSON array
+                  //  alert(JSON.stringify(response.data));
+                    $scope.cities = response.data;
+                }
+
+                function someBadFx(response) {
+                    alert(JSON.stringify(response.data));
+                }
+            };
+            //================================================
+                  $scope.sports=[{}];
+  $scope.doFetchAlSports = function () {
+                var url = "/do-fetch-all-sports";
+
+                $http.get(url).then(allGoodFx, someBadFx);
+                function allGoodFx(response) {
+                    //resp in JSON array
+                  //  alert(JSON.stringify(response.data));
+                    $scope.sports = response.data;
+                }
+
+                function someBadFx(response) {
+                    alert(JSON.stringify(response.data));
+                }
+            };
+
+
+
+
+
+            $scope.oneRecord = {};
+            $scope.doShowDetails = function (index) {
+                //alert(JSON.stringify($scope.jsonArray[index]))
+                $scope.oneRecord = $scope.jsonArray[index];
+
+            }
+        });
+    </script>
+</head>
+
+<body  style="background-color:  #DDD0C8;;" ng-app="kuchModule" ng-controller="kuchController"  ng-init="doFetchAlCities(); doFetchAlSports();" >
+    <center>
+               <h1 style="margin-top:10px; font-size: 50px; color: #323232;"> Explore Event</h1>
+               <br>
+         <div class="d-flex gap-3" style="width: 100%; max-width: 500px;">
+
+
+
+           <label for="sport" class="form-label"> Select Sports </label>
+             <select ng-model="selGame" class="form-select" style="flex: 1; height: 40px;">
+ <!---- <option value="none">select</option>--->
+     <option selected disabled>Choose Sport</option>
+
+    <option ng-repeat="obj in sports" value={{obj.sports}}>{{obj.sports}}</option>
+  </select>
+
+
+
+ <!---- <select class="form-select" id="eventsport" style="flex: 1; height: 40px;"  ng-model="selGame" value="Select Sport" required>
+    <option selected disabled >Choose sport</option>
+    <option>Cricket</option>
+    <option>Football</option>
+    <option>Hockey</option>
+    <option>Badminton</option>
+    <option>Tennis</option>
+    <option>Wrestling</option>
+    <option>Kabaddi</option>
+    <option>Table Tennis</option>
+    <option>Boxing</option>
+    <option>Chess</option>
+  </select>--->
+
+
+         <label for="city" class="form-label">Select City</label>
+
+  <select ng-model="selCity" class="form-select" style="flex: 1; height: 40px;">
+ <!---- <option value="none">select</option>--->
+     <option selected disabled>Choose City</option>
+
+    <option ng-repeat="obj in cities" value={{obj.city}}>{{obj.city}}</option>
+  </select>
+
+</div>
+
+          <br>
+        <input type="button" style="background-color: #323232; border:0px; border-radius: 5px; line-height: 40px; color:#c7ab9b;" value="Find Tournaments" ng-click="doFetchAll();" />
+
+        
+        <div class="container">
+            <div class="row">
+                <div class="col-md-3  p-3 mb-2" ng-repeat="obj in jsonArray">
+                    <div class="card">
+
+                        <!-- <img src={{obj.picurl}} height="150" class="card-img-top" alt="..." />-->
+
+                        <div class="card-body">
+                            <h5 class="card-title">
+                                {{obj.eventname}}
+                            </h5>
+                            <p class="card-text">
+                                {{obj.sports}}
+                            </p>
+                            <p class="card-text">
+                                {{obj.city}}
+                            </p>
+                            <p class="card-text">
+                                {{obj.doe}}
+                            </p>
+
+                            <a href="#" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#detailsModal"
+                                ng-click="doShowDetails($index);" style="background-color: #323232;color: #c7ab9b; border: 0px;">Details</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ************************** -->
+
+        <!-- Modal -->
+        <div class="modal fade" id="detailsModal" style="background-color:#ddd0c83e; border: 0px;" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" >
+                <div class="modal-content" style="background-color: #DDD0C8;">
+                    <div class="modal-header" style="background-color:#323232 ;color: #c7ab9b;" >
+                        <h1 class="modal-title fs-5" id="exampleModalLabel" style=" color:#c7ab9b; background-color: #323232;">DETAILS</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+
+                        <p>
+                            <!---  <img src={{oneRecord.picurl}} height="150" width="150"/>-->
+                        </p>
+                        <p>
+                            Emailid : {{oneRecord.emailid3}};
+                        </p>
+                        <p>
+                            Event name :{{oneRecord.eventname}};
+                        </p>
+                        <p>
+                            Date of Event :{{oneRecord.doe}};
+                        </p>
+                        <p>
+                            Time of Event:{{oneRecord.toe}};
+                        </p>
+                        <p>
+                            Last date of Registration:{{oneRecord.lastdate}};
+                        </p>
+                        <p>
+                            Address:{{oneRecord.address}};
+                        </p>
+                        <p>
+                            City:{{oneRecord.city}};
+                        </p>
+                        <p>
+                            sports:{{oneRecord.sports}};
+                        </p>
+                        <p>
+                            Minimum Age: {{oneRecord.minage}};
+                        </p>
+                        <p>
+                            Maximum Age :{{oneRecord.maxage}};
+                        </p>
+                        <p>
+                            Fee :{{oneRecord.fee}};
+                        </p>
+                        <p>
+                            Cash Prize:{{oneRecord.prize}};
+                        </p>
+                        <p>
+                            Contact:{{oneRecord.contact}};
+                        </p>
+
+                        </p>
+                    </div>
+                    <div class="modal-footer" style="background-color: #DDD0C8;">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" style="background-color:#323232;color: #c7ab9b;">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </center>
+</body>
+
+</html>
